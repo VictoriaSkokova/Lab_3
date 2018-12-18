@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int main() 
+int main()
 {
 	setlocale(LC_ALL, "Russian");
 	Tree Heap;
@@ -19,15 +19,14 @@ int main()
 	Heap.insert(24);
 	Heap.insert(13);
 	Heap.insert(5);
-
 	cout << "Добрый день. Лабораторная работа 3. Выполнила Скокова Виктория \n";
 	cout << "Дерево имеет вид: \n";
 
-	Heap.print_Tree(Heap.root, 0);
+	Heap.print();
 
 	cout << "\nРазмер дерева - " << Heap.size << "\n";
 	cout << "\nПроверим на наличие элемента с ключом 10:\n";
-	if (Heap.contains(Heap.root, 10) == true)
+	if (Heap.contains_begin(10) == true)
 		cout << "Элемент найден \n";
 	else cout << "Элемент не найден \n";
 	cout << endl;
@@ -52,15 +51,15 @@ int main()
 	cout << endl;
 	cout << "Удалим элемент дерева с ключом 10:\n";
 	cout << endl;
-	if (Heap.remove(Heap.root, 10) == false)
-		cout<<"В дереве не был найден элемент с данным ключом";
+	if (Heap.remove_begin(10) == false)
+		cout << "В дереве не был найден элемент с данным ключом";
 	else {
 		cout << "Размер дерева стал - " << Heap.size << "\n";
 
 		if (Heap.size > 0)
 		{
 			cout << "Дерево приняло вид: \n";
-			Heap.print_Tree(Heap.root, 0);
+			Heap.print();
 		}
 		else
 		{
@@ -68,6 +67,7 @@ int main()
 		}
 		cout << endl;
 	}
+
 	system("pause");
 	return 0;
 
