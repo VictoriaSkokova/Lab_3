@@ -29,15 +29,33 @@ public:
 	Node *root = nullptr;//Корень дерева
 	Node *last = nullptr;//Последний добавленный элемент
 	size_t size = 0;
+	void print(); //Вывод дерева
 	void insert(int newelem); //Вставка элемента
-	bool contains(Node *root, int findelem); //Проверка на содержание элемента по ключу
-	void print_Tree(Node * node, int level); //Вывод дерева
-	void Sort(Node* elem); //Сортировка
+	bool contains_begin(int findelem); //Проверка на содержание элемента по ключу
 	Iterator * create_dft_iterator()const; //Обход в глубину при помощи итератора
 	Iterator * create_bft_iterator()const; //Обход в ширину с помощью итератора
-	bool remove(Node *node, int value); //Удаление элемента по ключу
-	bool isEmpty(Node *root); //Проверка на пустоту списка
+	bool remove_begin(int value); //Удаление элемента по ключу
+	bool isEmpty(); //Проверка на пустоту списка
 	Tree(int key);
+
+
+
+private:
+
+	class bft_Iterator : public Iterator
+	{
+	public:
+		bft_Iterator(Node * root)
+		{
+			current = root;
+		};
+		int next() override;
+		bool has_next() override;
+
+	private:
+		LinkedList<Node*> lst;
+		Node * current;
+	};
 
 	/*______________________________________________________________________________________________*/
 
@@ -58,18 +76,10 @@ public:
 
 	//___________________________________________________________________________________________________
 
-	class bft_Iterator : public Iterator
-	{
-	public:
-		bft_Iterator(Node * root)
-		{
-			current = root;
-		};
-		int next() override;
-		bool has_next() override;
 
-	private:
-		LinkedList<Node*> lst;
-		Node * current;
-	};
+
+	bool remove(Node *node, int value);
+	bool contains(Node *root, int findelem);
+	void print_Tree(Node * node, int level);
+	void Sort(Node* elem); //Сортировка
 };
