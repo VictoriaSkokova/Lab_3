@@ -59,7 +59,7 @@ void Tree::insert(int newelem)
 		while (current->parent != nullptr && current == current->parent->rgt) //Движемся к корню
 			current = current->parent;
 
-		if (current->parent != nullptr) 
+		if (current->parent != nullptr)
 		{
 			if (current->parent->rgt != nullptr)//у родителя есть правый узел
 			{
@@ -71,7 +71,7 @@ void Tree::insert(int newelem)
 			else current = current->parent;//нет правого узла,вставим в правый
 		}
 		else //Попали в корень
-		{  
+		{
 			while (current->lft != nullptr)
 				current = current->lft;
 		}
@@ -98,7 +98,12 @@ void Tree::insert(int newelem)
 	Sort(last); //Сортируем под вид кучи
 }
 
-//Убрать в прайват и написать доп функцию
+bool Tree::remove_begin(int value)
+{
+
+	return (remove(root, value) == true) ? true : false;
+}
+
 bool Tree::remove(Node *node, int value) //Возвращает значение true, если элемент был найден, false - если элемент не найден
 {
 	int help = 0;
@@ -139,7 +144,7 @@ bool Tree::remove(Node *node, int value) //Возвращает значение
 						{
 							node->data = node->lft->data; //Меняем значение родителя на значение максимального потомка и передвигаемся в него
 							node = node->lft;
-							help = 1; 
+							help = 1;
 						}
 						else
 						{
@@ -178,9 +183,24 @@ void Tree::print_Tree(Node * node, int level) //Дерево выводится 
 	{
 		print_Tree(node->rgt, level + 1);
 		for (int i = 0; i < level; i++) cout << "   ";
-		cout << node->data << endl;
+		if (level != 0)
+		{
+			if (node->parent->lft == node)
+			{
+				cout << "\\ " << node->data << endl;
+			}
+			else
+			cout << "/ " << node->data << endl;
+		}
+		else
+			cout << node->data << endl;
 		print_Tree(node->lft, level + 1);
 	}
+}
+
+void Tree::print()
+{
+	print_Tree(root, 0);
 }
 
 void Tree::Sort(Node* elem)
@@ -216,7 +236,7 @@ int Tree::bft_Iterator::next()
 	current = lst.at(0);
 	lst.pop_front();
 	const int key = current->data;
-	if (current->lft) 
+	if (current->lft)
 	{
 		lst.push_back(current->lft);
 	}
@@ -267,6 +287,11 @@ bool Tree::dft_Iterator::has_next()
 //______________________________________________________________________________________________________________________
 
 
+bool Tree::contains_begin(int findelem)
+{
+	return (contains(root, findelem) == true) ? true : false;
+}
+
 bool Tree::contains(Node *root, int findelem)
 {
 	if (size == 0)
@@ -296,10 +321,7 @@ bool Tree::contains(Node *root, int findelem)
 }
 
 
-bool Tree::isEmpty(Node *root)
+bool Tree::isEmpty()
 {
-	if (size == 0)
-		return true;
-	else
-		return false;
+	return (size == 0) ? true : false;
 }
