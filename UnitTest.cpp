@@ -6,7 +6,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest
-{		
+{
 	TEST_CLASS(UnitTest1)
 	{
 	public:
@@ -27,12 +27,43 @@ namespace UnitTest
 			Assert::IsTrue(Heap.root->data == 3);
 		}
 
+		TEST_METHOD(insert_several_checks)
+		{
+			bool check = true;
+			Tree Heap;
+			Heap.insert(4);
+			Heap.insert(6);
+			Heap.insert(3);
+			Heap.insert(2);
+			Heap.insert(5);
+			
+			int i = 0;
+
+			int array[5];
+			array[0] = 6;
+			array[1] = 5;
+			array[2] = 3;
+			array[3] = 2;
+			array[4] = 4;
+
+			Iterator* bft_iterator = Heap.create_bft_iterator();
+			while (bft_iterator->has_next())
+
+			{
+				if (bft_iterator->next() != array[i])
+					check = false;
+				i++;
+			}
+
+			Assert::IsTrue(check);
+		}
+
 		TEST_METHOD(contains_true)
 		{
 			Tree Heap;
 			Heap.insert(2);
 			Heap.insert(3);
-			Assert::IsTrue(Heap.contains(Heap.root,3) == true);
+			Assert::IsTrue(Heap.contains_begin(3) == true);
 		}
 
 		TEST_METHOD(contains_false)
@@ -40,40 +71,40 @@ namespace UnitTest
 			Tree Heap;
 			Heap.insert(2);
 			Heap.insert(3);
-			Assert::IsTrue(Heap.contains(Heap.root, 4) == false);
+			Assert::IsTrue(Heap.contains_begin(4) == false);
 		}
 
 		TEST_METHOD(contains_empty)
 		{
 			Tree Heap;
-			Assert::IsTrue(Heap.contains(Heap.root, 4) == false);
+			Assert::IsTrue(Heap.contains_begin(4) == false);
 		}
 
 		TEST_METHOD(isntEmpty)
 		{
 			Tree Heap;
 			Heap.insert(3);
-			Assert::IsFalse(Heap.isEmpty(Heap.root));
+			Assert::IsFalse(Heap.isEmpty());
 		}
 
 		TEST_METHOD(isEmpty)
 		{
 			Tree Heap;
-			Assert::IsTrue(Heap.isEmpty(Heap.root));
+			Assert::IsTrue(Heap.isEmpty());
 		}
 
 		TEST_METHOD(remove_empty)
 		{
 			Tree Heap;
-			Assert::IsTrue(Heap.remove(Heap.root, 4) == false);
-		} // Инсерт и ремув
+			Assert::IsTrue(Heap.remove_begin(4) == false);
+		} 
 
 		TEST_METHOD(remove_one)
 		{
 			Tree Heap;
 			Heap.insert(4);
-			Heap.remove(Heap.root, 4);
-			Assert::IsTrue(Heap.isEmpty(Heap.root));
+			Heap.remove_begin(4);
+			Assert::IsTrue(Heap.isEmpty());
 		}
 
 		TEST_METHOD(remove_root)
@@ -82,11 +113,11 @@ namespace UnitTest
 			Heap.insert(4);
 			Heap.insert(6);
 			Heap.insert(5);
-			Heap.remove(Heap.root, 6);
+			Heap.remove_begin(6);
 			Assert::IsTrue(Heap.root->data != 6);
 		}
 
-		TEST_METHOD(remove_middle)
+		TEST_METHOD(remove_middle_if_one)
 		{
 			Tree Heap;
 			Heap.insert(4);
@@ -94,9 +125,42 @@ namespace UnitTest
 			Heap.insert(5);
 			Heap.insert(3);
 			Heap.insert(2);
-			Heap.remove(Heap.root, 5);
-			Assert::IsTrue(Heap.contains(Heap.root, 5) == false);
+			Heap.remove_begin(5);
+			Assert::IsTrue(Heap.contains_begin(5) == false);
 		}
+
+		TEST_METHOD(remove_middle_if_more)
+		{
+			Tree Heap;
+			Heap.insert(4);
+			Heap.insert(6);
+			Heap.insert(5);
+			Heap.insert(3);
+			Heap.insert(2);
+			Heap.insert(5);
+			Heap.remove_begin(5);
+
+			bool check = true;
+			int i = 0;
+
+			int array[5];
+			array[0] = 6;
+			array[1] = 4;
+			array[2] = 5;
+			array[3] = 3;
+			array[4] = 2;
+
+			Iterator* bft_iterator = Heap.create_bft_iterator();
+			while (bft_iterator->has_next())
+
+			{
+				if (bft_iterator->next() != array[i])
+					check = false;
+				i++;
+			}
+			Assert::IsTrue(check);
+		}
+
 
 		TEST_METHOD(remove_end)
 		{
@@ -106,8 +170,8 @@ namespace UnitTest
 			Heap.insert(5);
 			Heap.insert(3);
 			Heap.insert(2);
-			Heap.remove(Heap.root, 2);
-			Assert::IsTrue(Heap.contains(Heap.root, 2) == false);
+			Heap.remove_begin(2);
+			Assert::IsTrue(Heap.contains_begin(2) == false);
 		}
 
 		TEST_METHOD(size_remove)
@@ -116,7 +180,7 @@ namespace UnitTest
 			Heap.insert(4);
 			Heap.insert(6);
 			Heap.insert(5);
-			Heap.remove(Heap.root, 6);
+			Heap.remove_begin(6);
 			Assert::IsTrue(Heap.size == 2);
 		}
 
@@ -128,7 +192,7 @@ namespace UnitTest
 			Heap.insert(4);
 			Heap.insert(6);
 			Iterator* dft_iterator = Heap.create_dft_iterator();
-				dft_iterator->next();
+			dft_iterator->next();
 			Assert::IsTrue(dft_iterator->has_next());
 		}
 
