@@ -10,6 +10,23 @@ class Tree
 {
 public:
 
+
+	~Tree();
+	Tree() {  };
+	
+	void print(); //Вывод дерева
+	void insert(int newelem); //Вставка элемента
+	bool contains_begin(int findelem); //Проверка на содержание элемента по ключу
+	Iterator * create_dft_iterator()const; //Обход в глубину при помощи итератора
+	Iterator * create_bft_iterator()const; //Обход в ширину с помощью итератора
+	bool remove_begin(int value); //Удаление элемента по ключу
+	bool isEmpty(); //Проверка на пустоту списка
+	Tree(int key);
+
+
+
+private:
+
 	class Node//Элемент дерева
 	{
 	public:
@@ -24,23 +41,11 @@ public:
 		Node(int k);
 		void Delete();
 	};
-	~Tree();
-	Tree() {  };
+
+
 	Node *root = nullptr;//Корень дерева
 	Node *last = nullptr;//Последний добавленный элемент
 	size_t size = 0;
-	void print(); //Вывод дерева
-	void insert(int newelem); //Вставка элемента
-	bool contains_begin(int findelem); //Проверка на содержание элемента по ключу
-	Iterator * create_dft_iterator()const; //Обход в глубину при помощи итератора
-	Iterator * create_bft_iterator()const; //Обход в ширину с помощью итератора
-	bool remove_begin(int value); //Удаление элемента по ключу
-	bool isEmpty(); //Проверка на пустоту списка
-	Tree(int key);
-
-
-
-private:
 
 	class bft_Iterator : public Iterator
 	{
