@@ -13,7 +13,7 @@ public:
 
 	~Tree();
 	Tree() {  };
-	
+	size_t size = 0;
 	void print(); //Вывод дерева
 	void insert(int newelem); //Вставка элемента
 	bool contains_begin(int findelem); //Проверка на содержание элемента по ключу
@@ -45,7 +45,6 @@ private:
 
 	Node *root = nullptr;//Корень дерева
 	Node *last = nullptr;//Последний добавленный элемент
-	size_t size = 0;
 
 	class bft_Iterator : public Iterator
 	{
